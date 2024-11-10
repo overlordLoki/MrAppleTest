@@ -5,10 +5,21 @@
       <p>A place to share your <i>Angular</i> knowledge.</p>
     </div>
   </div>
-
   <div class="container page">
     <div class="row">
-      <div class="col-md-9">
+      <!-- Move the Newsletter Signup Section here to the left of "Your Feed" -->
+      <div class="col-md-3">
+        <section class="newsletter-signup">
+          <h2>Subscribe to our Newsletter</h2>
+          <p>
+            Stay updated with the latest articles and news directly in your
+            inbox!
+          </p>
+          <app-email-subscription></app-email-subscription>
+        </section>
+      </div>
+
+      <div class="col-md-6">
         <div class="feed-toggle">
           <ul class="nav nav-pills outline-active">
             <li class="nav-item">
@@ -24,7 +35,7 @@
               <a
                 class="nav-link"
                 [ngClass]="{
-                  active: listConfig.type === 'all' && !listConfig.filters.tag
+                  active: listConfig.type === 'all' && !listConfig.filters.tag,
                 }"
                 (click)="setListTo('all')"
               >
@@ -38,27 +49,23 @@
             </li>
           </ul>
         </div>
-
         <app-article-list [limit]="10" [config]="listConfig" />
       </div>
 
+      <!-- Tags should be placed here on the right of the Global Feed -->
       <div class="col-md-3" *rxLet="tags$; let tags">
         <div class="sidebar">
           <p>Popular Tags</p>
-
           <div class="tag-list">
-            @for (tag of tags; track tag) {
-              <a
-                class="tag-default tag-pill"
-                (click)="setListTo('all', { tag: tag })"
-              >
-                {{ tag }}
-              </a>
-            }
+            <a
+              *ngFor="let tag of tags; trackBy: trackByTag"
+              class="tag-default tag-pill"
+              (click)="setListTo('all', { tag: tag })"
+            >
+              {{ tag }}
+            </a>
           </div>
-
           <div [hidden]="tagsLoaded">Loading tags...</div>
-
           <div [hidden]="!tagsLoaded || tags.length > 0">
             No tags are here... yet.
           </div>

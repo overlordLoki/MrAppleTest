@@ -9,6 +9,7 @@ import { UserService } from "../../../../core/auth/services/user.service";
 import { RxLet } from "@rx-angular/template/let";
 import { IfAuthenticatedDirective } from "../../../../core/auth/if-authenticated.directive";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { EmailSubscriptionComponent } from "../../../newsletter/email-subscription/email-subscription.component"; // <-- Add this import
 
 @Component({
   selector: "app-home-page",
@@ -21,6 +22,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     RxLet,
     NgForOf,
     IfAuthenticatedDirective,
+    EmailSubscriptionComponent, // <-- Add to imports array
   ],
   standalone: true,
 })
@@ -67,5 +69,10 @@ export default class HomeComponent implements OnInit {
 
     // Otherwise, set the list object
     this.listConfig = { type: type, filters: filters };
+  }
+
+  // Define the trackByTag method
+  trackByTag(index: number, tag: string): string {
+    return tag; // Assuming each tag is a string, use it as a unique identifier
   }
 }

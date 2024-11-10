@@ -1,0 +1,10 @@
+<form [formGroup]="subscriptionForm" (ngSubmit)="onSubmit()">
+  <label for="email">Subscribe to our Newsletter</label>
+  <input
+    type="email"
+    id="email"
+    formControlName="email"
+    placeholder="Enter your email"
+  />
+  <button type="submit" [disabled]="!subscriptionForm.valid">Subscribe</button>
+</form>
