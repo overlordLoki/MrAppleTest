@@ -53,4 +53,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import("./features/article/pages/article/article.component"),
   },
+  // Add the route for email management
+  {
+    path: "email-management",
+    loadComponent: () =>
+      import(
+        "./features/newsletter/email-management/email-management.component"
+      ).then((m) => m.EmailManagementComponent),
+    canActivate: [() => inject(UserService).isAuthenticated], // Ensure only authenticated users can access
+  },
 ];

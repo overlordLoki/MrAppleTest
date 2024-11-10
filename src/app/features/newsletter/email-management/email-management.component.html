@@ -1,0 +1,7 @@
+<h2>Manage Subscribers</h2>
+<ul>
+  <li *ngFor="let subscriber of subscribers">
+    {{ subscriber.email }}
+    <button (click)="removeSubscriber(subscriber.email)">Remove</button>
+  </li>
+</ul>

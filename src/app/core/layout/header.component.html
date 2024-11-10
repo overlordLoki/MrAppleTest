@@ -3,7 +3,10 @@
     <a class="navbar-brand" routerLink="/">conduit</a>
 
     <!-- Show this for logged out users -->
-    <ul *ifAuthenticated="false" class="nav navbar-nav pull-xs-right">
+    <ul
+      *ngIf="!(isAuthenticated$ | async)"
+      class="nav navbar-nav pull-xs-right"
+    >
       <li class="nav-item">
         <a class="nav-link" routerLink="/"> Home </a>
       </li>
@@ -22,7 +25,7 @@
     </ul>
 
     <!-- Show this for logged in users -->
-    <ul *ifAuthenticated="true" class="nav navbar-nav pull-xs-right">
+    <ul *ngIf="isAuthenticated$ | async" class="nav navbar-nav pull-xs-right">
       <li class="nav-item">
         <a
           class="nav-link"
@@ -46,22 +49,31 @@
         </a>
       </li>
 
-      @if (currentUser$ | async; as currentUser) {
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [routerLink]="['/profile', currentUser.username]"
-            routerLinkActive="active"
-          >
-            <img
-              [src]="currentUser.image"
-              *ngIf="currentUser.image"
-              class="user-pic"
-            />
-            {{ currentUser.username }}
-          </a>
-        </li>
-      }
+      <!-- Link to email management page -->
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/email-management"
+          routerLinkActive="active"
+        >
+          <i class="ion-email"></i>&nbsp;Email Management
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="currentUser$ | async as currentUser">
+        <a
+          class="nav-link"
+          [routerLink]="['/profile', currentUser.username]"
+          routerLinkActive="active"
+        >
+          <img
+            [src]="currentUser.image"
+            *ngIf="currentUser.image"
+            class="user-pic"
+          />
+          {{ currentUser.username }}
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
